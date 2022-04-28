@@ -5,24 +5,45 @@ using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
-    
+
     Rigidbody2D rb;
     public float velocity, jump;
     bool Touch = true;
     Camera Cam;
-   
+    GameManager Manager;
+    int addition = 1;
+    [SerializeField] float time= 0;
     
     void Start()
     {
         Cursor.visible = false;
         rb = GetComponent<Rigidbody2D>();
         Cam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        Manager = GameObject.FindGameObjectWithTag("Manager").GetComponent<GameManager>();
     }
 
 
     void Update()
     {
+
         movement();
+
+        Timer();
+    }
+
+    private void Timer()
+    {
+        time -= Time.deltaTime;
+        if (time > 0)
+        {
+            addition = 2;
+            Manager.x2Text.gameObject.SetActive(true);
+        }
+        else if (time <= 0)
+        {
+            addition = 1;
+            Manager.x2Text.gameObject.SetActive(false);
+        }
     }
 
     private void movement()
@@ -45,12 +66,24 @@ public class Player : MonoBehaviour
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.Dead(); 
         }
-        
+        if (collision.gameObject.CompareTag("End")) print("Next Level");
     }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Camera")) Cam.Cam = true;
+
         if (collision.gameObject.CompareTag("NoCamera")) Cam.Cam = false;
+
+        if (collision.gameObject.CompareTag("Money")) {
+            Destroy(collision.gameObject);
+            Manager.Score += addition ; }
+
+        if (collision.gameObject.CompareTag("X2")) {
+            Destroy(collision.gameObject);
+            time = 10;
+        }
+        
     }
     private void Dead()
     {

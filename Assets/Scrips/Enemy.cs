@@ -8,10 +8,12 @@ public class Enemy : MonoBehaviour
     public float velocity;
     public bool right = true;
     public GameObject body;
+    [Range(0,10)]
+    [SerializeField] private float Limit;
     void Start()
     {
-        positive = transform.position.x + 3;
-        negative = transform.position.x - 3;
+        positive = transform.position.x + Limit;
+        negative = transform.position.x - Limit;
     }
 
 

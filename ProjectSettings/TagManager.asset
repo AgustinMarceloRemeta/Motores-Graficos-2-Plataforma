@@ -9,6 +9,11 @@ TagManager:
   - NoCamera
   - Enemy
   - DeadEnemy
+  - End
+  - Money
+  - Power Up
+  - Manager
+  - X2
   layers:
   - Default
   - TransparentFX
