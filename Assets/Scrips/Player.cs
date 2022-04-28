@@ -8,7 +8,7 @@ public class Player : MonoBehaviour
 
     Rigidbody2D rb;
     public float velocity, jump;
-    bool Touch = true;
+    bool Touch = true, Key = false;
     Camera Cam;
     GameManager Manager;
     int addition = 1;
@@ -59,14 +59,19 @@ public class Player : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-       if( collision.gameObject.CompareTag("terrain")) Touch= true;
+       if( collision.gameObject.layer == LayerMask.NameToLayer("Terrain")) Touch= true;
        if( collision.gameObject.CompareTag("Enemy")) Dead();
         if (collision.gameObject.CompareTag("DeadEnemy")) 
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
             enemy.Dead(); 
         }
-        if (collision.gameObject.CompareTag("End")) print("Next Level");
+        if (collision.gameObject.CompareTag("End")) NextLevel();
+    }
+
+    private static void NextLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -83,10 +88,17 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
             time = 10;
         }
-        
+        if (collision.gameObject.CompareTag("Key")) 
+        {
+            collision.transform.position = new Vector3 (transform.position.x + 0.5f , transform.position.y, transform.position.z);
+            collision.transform.SetParent(transform);
+            Key = true;
+        }
+        if (collision.gameObject.CompareTag("Door")&& Key) { NextLevel(); }
+
     }
     private void Dead()
     {
-        SceneManager.LoadScene(0);
+       SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
