@@ -9,7 +9,7 @@ public class BossMario : MonoBehaviour
 
     void Start()
     {
-        InvokeRepeating("SpawnFungus", 0, 2);
+        InvokeRepeating("SpawnFungus", 2, 2);
     }
 
 

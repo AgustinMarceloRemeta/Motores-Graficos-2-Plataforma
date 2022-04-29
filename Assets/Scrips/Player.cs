@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     GameManager Manager;
     int addition = 1;
     [SerializeField] float time= 0;
+    [SerializeField] GameObject SoundMoney, SoundPowerUp, SoundDeadEnemy;
     
     void Start()
     {
@@ -64,7 +65,8 @@ public class Player : MonoBehaviour
         if (collision.gameObject.CompareTag("DeadEnemy")) 
         {
             Enemy enemy = collision.gameObject.GetComponent<Enemy>();
-            enemy.Dead(); 
+            enemy.Dead();
+            Instantiate(SoundDeadEnemy);
         }
         if (collision.gameObject.CompareTag("End")) NextLevel();
     }
@@ -82,11 +84,14 @@ public class Player : MonoBehaviour
 
         if (collision.gameObject.CompareTag("Money")) {
             Destroy(collision.gameObject);
-            Manager.Score += addition ; }
+            Manager.Score += addition ;
+            Instantiate(SoundMoney);
+        }
 
         if (collision.gameObject.CompareTag("X2")) {
             Destroy(collision.gameObject);
             time = 10;
+            Instantiate(SoundPowerUp);
         }
         if (collision.gameObject.CompareTag("Key")) 
         {

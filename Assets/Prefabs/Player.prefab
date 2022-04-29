@@ -101,6 +101,9 @@ MonoBehaviour:
   velocity: 0.005
   jump: 7
   time: 0
+  SoundMoney: {fileID: 7275059450321872652, guid: d530c09332a2d864f87a762f2c8f8f2c, type: 3}
+  SoundPowerUp: {fileID: 1822914231902464396, guid: cae41d17cd2decf48b0bc56a75e896a9, type: 3}
+  SoundDeadEnemy: {fileID: 7760187957502325159, guid: bb1371ad53ca1a04e8ab4427627f4758, type: 3}
 --- !u!50 &3362852317260069387
 Rigidbody2D:
   serializedVersion: 4
